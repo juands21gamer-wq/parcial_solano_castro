@@ -77,51 +77,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 4. Guardar Configuración y Alternar Pantallas
-  formCaracterizacion.addEventListener('submit', (e) => {
-    e.preventDefault();
+ // 4. Guardar Configuración, Calcular Saldo Base y Almacenar en LocalStorage
+formCaracterizacion.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-    const ingresoPrincipal = parseFloat(document.getElementById('ingreso-principal').value) || 0;
+  // 1. Obtener ingreso principal
+  const ingresoPrincipal = parseFloat(document.getElementById('ingreso-principal').value) || 0;
 
-    const ingresosAdicionales = Array.from(document.querySelectorAll('.fila-ingreso-adicional')).map(fila => ({
+  // 2. Recorrer e estructurar ingresos adicionales
+  const ingresosAdicionales = Array.from(document.querySelectorAll('.fila-ingreso-adicional')).map(fila => {
+    return {
       nombre: fila.querySelector('[name="ingreso_nombre"]').value,
       monto: parseFloat(fila.querySelector('[name="ingreso_monto"]').value) || 0
-    }));
-
-    const gastosFijos = Array.from(document.querySelectorAll('.fila-gasto-fijo')).map(fila => {
-      const nombre = fila.querySelector('[name="gasto_nombre"]').value;
-      const montoTotal = parseFloat(fila.querySelector('[name="gasto_monto"]').value) || 0;
-      const esCompartido = fila.querySelector('.check-compartido').checked;
-      const personas = esCompartido ? (parseInt(fila.querySelector('[name="gasto_personas"]').value) || 1) : 1;
-
-      return {
-        nombre,
-        montoTotal,
-        esCompartido,
-        personas,
-        montoAportado: montoTotal / personas
-      };
-    });
-
-    const totalIngresos = ingresoPrincipal + ingresosAdicionales.reduce((acc, i) => acc + i.monto, 0);
-    const totalGastosFijos = gastosFijos.reduce((acc, g) => acc + g.montoAportado, 0);
-
-    const configuracionUsuario = {
-      ingresoPrincipal,
-      ingresosAdicionales,
-      gastosFijos,
-      resumen: {
-        totalIngresos,
-        totalGastosFijos,
-        saldoNeto: totalIngresos - totalGastosFijos
-      }
     };
-
-    console.log("Configuración procesada:", configuracionUsuario);
-
-    // Ocultar Wizard y mostrar Dashboard
-    document.getElementById('wizard').classList.add('d-none');
-    document.getElementById('dashboard').classList.remove('d-none');
   });
 
+  // 3. Recorrer e estructurar gastos fijos calculando 'valorReal'
+  const gastosFijos = Array.from(document.querySelectorAll('.fila-gasto-fijo')).map(fila => {
+    const nombre = fila.querySelector('[name="gasto_nombre"]').value;
+    const monto = parseFloat(fila.querySelector('[name="gasto_monto"]').value) || 0;
+    const esCompartido = fila.querySelector('.check-compartido').checked;
+
+    let valorReal = monto;
+    let tipoDivision = 'ninguna'; // 'porcentaje' | 'personas' | 'ninguna'
+    let porcentaje = null;
+    let numPersonas = null;
+
+    if (esCompartido) {
+      // Si usas un selector o si es por personas/porcentaje:
+      const inputPersonas = fila.querySelector('[name="gasto_personas"]');
+      const inputPorcentaje = fila.querySelector('[name="gasto_porcentaje"]');
+
+      if (inputPorcentaje && inputPorcentaje.value !== "") {
+        tipoDivision = 'porcentaje';
+        porcentaje = parseFloat(inputPorcentaje.value) || 0;
+        valorReal = monto * (porcentaje / 100);
+      } else if (inputPersonas && inputPersonas.value !== "") {
+        tipoDivision = 'personas';
+        numPersonas = parseInt(inputPersonas.value) || 1;
+        valorReal = monto / numPersonas;
+      }
+    }
+
+    return {
+      nombre,
+      monto,
+      esCompartido,
+      tipoDivision,
+      porcentaje,
+      numPersonas,
+      valorReal
+    };
+  });
+
+  // 4. Totales y Saldo Base
+  const totalIngresosAdicionales = ingresosAdicionales.reduce((acc, item) => acc + item.monto, 0);
+  const totalIngresos = ingresoPrincipal + totalIngresosAdicionales;
+  const totalGastosFijos = gastosFijos.reduce((acc, item) => acc + item.valorReal, 0);
+  const saldoBase = totalIngresos - totalGastosFijos;
+
+  // 5. Objeto JS Limpio Final
+  const config = {
+    ingresoPrincipal,
+    ingresosAdicionales,
+    gastosFijos,
+    totalIngresos,
+    totalGastosFijos,
+    saldoBase
+  };
+
+  // 6. Guardar en localStorage
+  localStorage.setItem('config', JSON.stringify(config));
+
+  console.log('Configuración guardada en LocalStorage:', config);
+
+  // 7. Ocultar Wizard y Mostrar Dashboard
+  document.getElementById('wizard').classList.add('d-none');
+  document.getElementById('dashboard').classList.remove('d-none');
 });
