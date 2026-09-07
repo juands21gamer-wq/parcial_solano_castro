@@ -69,23 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const gastosDiarios = JSON.parse(localStorage.getItem('gastosDiarios')) || [];
     const ingresosExtraDash = JSON.parse(localStorage.getItem('ingresosExtra')) || [];
 
-    // Suma de Ingresos Extra agregados desde el Dashboard
     const totalIngresosExtraDash = ingresosExtraDash.reduce((sum, item) => sum + item.monto, 0);
     const ingresosTotales = (config.totalIngresos || 0) + totalIngresosExtraDash;
 
-    // Suma de Gastos Fijos (Wizard + Dashboard)
     const gastosFijosTotales = config.totalGastosFijos || 0;
-
-    // Suma de Gastos Variables (Cotidianos)
     const totalGastosVariables = gastosDiarios.reduce((sum, item) => sum + item.monto, 0);
 
-    // Capacidad / Saldo Disponible = (Ingresos Totales - Gastos Fijos) - Gastos Variables
     const capacidadDisponible = ingresosTotales - gastosFijosTotales - totalGastosVariables;
 
-    document.getElementById('card-ingresos-totales').textContent = formatoMoneda.format(ingresosTotales);
-    document.getElementById('card-gastos-fijos').textContent = formatoMoneda.format(gastosFijosTotales);
-    document.getElementById('card-saldo-inicial').textContent = formatoMoneda.format(capacidadDisponible);
-    document.getElementById('card-gastos-variables').textContent = formatoMoneda.format(totalGastosVariables);
+    const elIngresos = document.getElementById('card-ingresos-totales');
+    const elGastosFijos = document.getElementById('card-gastos-fijos');
+    const elSaldo = document.getElementById('card-saldo-inicial');
+    const elVariables = document.getElementById('card-gastos-variables');
+
+    if (elIngresos) elIngresos.textContent = formatoMoneda.format(ingresosTotales);
+    if (elGastosFijos) elGastosFijos.textContent = formatoMoneda.format(gastosFijosTotales);
+    if (elSaldo) elSaldo.textContent = formatoMoneda.format(capacidadDisponible);
+    if (elVariables) elVariables.textContent = formatoMoneda.format(totalGastosVariables);
   }
 
   // =========================================================================
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 4. MÓDULO INGRESOS EXTRA / ADICIONALES
+  // 4. MÓDULO INGRESOS EXTRA / ADICIONALES (ACTUALIZADO)
   // =========================================================================
   if (formIngresosExtra) {
     formIngresosExtra.addEventListener('submit', (e) => {
@@ -185,10 +185,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const config = JSON.parse(localStorage.getItem('config')) || {};
     const ingresosWizard = config.ingresosAdicionales || [];
     const ingresosDashboard = JSON.parse(localStorage.getItem('ingresosExtra')) || [];
+    const fechaHoy = new Date().toLocaleDateString('es-CO');
 
     const todosLosIngresos = [
-      ...ingresosWizard.map(i => ({ fecha: 'Wizard', concepto: i.nombre, monto: i.monto, esWizard: true })),
-      ...ingresosDashboard.map((i, idx) => ({ fecha: i.fecha, concepto: i.concepto, monto: i.monto, indexDash: idx }))
+      ...ingresosWizard.map(i => ({ 
+        fecha: i.fecha || fechaHoy, 
+        concepto: i.nombre, 
+        monto: i.monto, 
+        esWizard: true 
+      })),
+      ...ingresosDashboard.map((i, idx) => ({ 
+        fecha: i.fecha, 
+        concepto: i.concepto, 
+        monto: i.monto, 
+        indexDash: idx 
+      }))
     ];
 
     tablaIngresosExtraBody.innerHTML = '';
@@ -201,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     todosLosIngresos.forEach((ingreso) => {
       const fila = document.createElement('tr');
       const botonAccion = ingreso.esWizard 
-        ? `<span class="badge bg-light text-dark border">Wizard</span>`
+        ? `<span class="badge bg-light text-dark border">Configuración</span>`
         : `<button class="btn btn-outline-danger btn-sm btn-eliminar-ingreso-extra" data-index="${ingreso.indexDash}">Eliminar</button>`;
 
       fila.innerHTML = `
@@ -254,7 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
       config.gastosFijos = config.gastosFijos || [];
       config.gastosFijos.push(nuevoGastoFijo);
 
-      // Recalcular total de gastos fijos acumulados
       config.totalGastosFijos = config.gastosFijos.reduce((sum, g) => sum + g.valorReal, 0);
       config.saldoBase = config.totalIngresos - config.totalGastosFijos;
 
@@ -391,17 +401,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 7. GUARDAR CONFIGURACIÓN WIZARD
+  // 7. GUARDAR CONFIGURACIÓN WIZARD (ACTUALIZADO)
   // =========================================================================
   if (formCaracterizacion) {
     formCaracterizacion.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const fechaActual = new Date().toLocaleDateString('es-CO');
       const ingresoPrincipal = parseFloat(document.getElementById('ingreso-principal').value) || 0;
 
       const ingresosAdicionales = Array.from(document.querySelectorAll('.fila-ingreso-adicional')).map(fila => ({
         nombre: fila.querySelector('[name="ingreso_nombre"]').value,
-        monto: parseFloat(fila.querySelector('[name="ingreso_monto"]').value) || 0
+        monto: parseFloat(fila.querySelector('[name="ingreso_monto"]').value) || 0,
+        fecha: fechaActual
       }));
 
       const gastosFijos = Array.from(document.querySelectorAll('.fila-gasto-fijo')).map(fila => {
@@ -460,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Arrancar app
   iniciarApp();
 
 });

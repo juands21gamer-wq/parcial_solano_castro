@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg-beige: #efebe4;
+  --card-beige: #f6f3ed;
+  --dark-green: #18281f;
+  --accent-red: #a8432a;
+  --text-dark: #1c221e;
+  --text-muted: #6b726d;
+  --border-color: #e2ddd5;
+}
+
+body {
+  background-color: var(--bg-beige);
+  color: var(--text-dark);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Encabezados Serif */
+h1, h2, h3, h4, .card-title, .navbar-brand {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* Tarjeta Principal de Resumen (Verde Oscuro) */
+.card-hero {
+  background-color: var(--dark-green) !important;
+  color: #ffffff !important;
+  border-radius: 12px;
+  border: none;
+  padding: 1.5rem;
+}
+
+.card-hero .main-balance {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.card-hero .sub-label {
+  font-size: 0.85rem;
+  color: #a3b899;
+  text-transform: lowercase;
+}
+
+.card-hero .sub-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Tarjetas Secundarias y Contenedores */
+.card, .p-3.border.rounded.bg-light {
+  background-color: var(--card-beige) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px;
+}
+
+.card-header {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Entradas y Formularios */
+.form-control, .form-select {
+  background-color: var(--card-beige);
+  border: 1px solid var(--border-color);
+  color: var(--text-dark);
+  border-radius: 8px;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: #ffffff;
+  border-color: var(--dark-green);
+  box-shadow: 0 0 0 0.2rem rgba(24, 40, 31, 0.15);
+}
+
+/* Botones */
+.btn-primary, .btn-danger, .btn-success {
+  background-color: var(--dark-green) !important;
+  border-color: var(--dark-green) !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn-primary:hover, .btn-danger:hover, .btn-success:hover {
+  background-color: #0f1a14 !important;
+}
+
+.btn-outline-danger {
+  color: var(--accent-red);
+  border-color: transparent;
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(168, 67, 42, 0.1);
+  color: var(--accent-red);
+}
+
+/* Enlace/Botón Reiniciar en el Header */
+#btn-reiniciar {
+  color: var(--text-muted);
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+#btn-reiniciar:hover {
+  color: var(--accent-red);
+}
+
+/* Navbar Limpia */
+.navbar {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+  color: var(--text-dark) !important;
+  font-size: 1.5rem;
+}
+
+/* Tablas */
+.table {
+  --bs-table-bg: transparent;
+  color: var(--text-dark);
+}
+
+.table th {
+  font-weight: 600;
+  border-bottom-color: var(--border-color);
+  color: var(--text-muted);
+}
+
+.table td {
+  border-bottom-color: var(--border-color);
+}
+
+/* Pestañas (Tabs) */
+.nav-tabs {
+  border-bottom-color: var(--border-color);
+}
+
+.nav-tabs .nav-link {
+  color: var(--text-muted) !important;
+  border: none !important;
+  font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--dark-green) !important;
+  background-color: transparent !important;
+  border-bottom: 2px solid var(--dark-green) !important;
+}
+
+/* Corregir texto blanco en el Navbar */
+.nav-link.active, 
+.navbar-nav .nav-link {
+  color: var(--text-dark) !important;
+}
+
+/* Corregir texto blanco en los montos de las cards */
+#dashboard .card-text,
+.card-body .card-text {
+  color: var(--text-dark) !important;
+  font-weight: 700;
+}
