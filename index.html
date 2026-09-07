@@ -9,35 +9,64 @@
 </head>
 <body>
 
-  <!-- 1. SECCIÓN: WIZARD (Formulario de Caracterización) -->
-  <section id="wizard" class="container py-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h2 class="card-title text-center mb-4">Caracterización</h2>
+  <!-- 1. SECCIÓN: WIZARD (Formulario de Caracterización Avanzado) -->
+<section id="wizard" class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0">Configuración Inicial</h3>
+        </div>
+        <div class="card-body">
+          <form id="form-caracterizacion">
             
-            <form id="form-caracterizacion">
-              <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre Completo</label>
-                <input type="text" class="form-input form-control" id="nombre" placeholder="Ingresa tu nombre" required>
-              </div>
+            <!-- Ingreso Principal -->
+            <div class="mb-4">
+              <label for="ingreso-principal" class="form-label fw-bold">Ingreso Principal</label>
+              <input type="number" step="0.01" class="form-control" id="ingreso-principal" placeholder="Ej. 2500000" required>
+            </div>
 
-              <div class="mb-3">
-                <label for="ingreso" class="form-label">Ingreso Mensual / Presupuesto</label>
-                <input type="number" class="form-control" id="ingreso" placeholder="0.00" required>
-              </div>
+            <hr class="my-4">
 
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Guardar y Continuar</button>
+            <!-- Ingresos Adicionales Dinámicos -->
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Ingresos Adicionales</h5>
+                <button type="button" class="btn btn-outline-success btn-sm" id="btn-add-ingreso">
+                  + Agregar Ingreso
+                </button>
               </div>
-            </form>
+              <div id="contenedor-ingresos-adicionales" class="d-flex flex-column gap-2">
+                <!-- Filas dinámicas de ingresos adicionales -->
+              </div>
+            </div>
 
-          </div>
+            <hr class="my-4">
+
+            <!-- Gastos Fijos Dinámicos -->
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Gastos Fijos</h5>
+                <button type="button" class="btn btn-outline-danger btn-sm" id="btn-add-gasto">
+                  + Agregar Gasto Fijo
+                </button>
+              </div>
+              <div id="contenedor-gastos-fijos" class="d-flex flex-column gap-3">
+                <!-- Filas dinámicas de gastos fijos -->
+              </div>
+            </div>
+
+            <!-- Botón Final -->
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">Guardar Configuración</button>
+            </div>
+
+          </form>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- 2. SECCIÓN: DASHBOARD (Oculto por defecto con d-none) -->
   <section id="dashboard" class="d-none">
@@ -147,8 +176,12 @@
     </div>
   </section>
 
-  <!-- Bootstrap 5 JS Bundle por CDN (antes de cerrar body) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- Tu archivo JS personalizado -->
+  <script src="./js/javascript.js"></script>
+  
+</body>
 </body>
 </html>
