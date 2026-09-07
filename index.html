@@ -1,76 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Aplicación</title>
   <!-- Bootstrap 5 CSS por CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
+
 <body>
 
   <!-- 1. SECCIÓN: WIZARD (Formulario de Caracterización Avanzado) -->
-<section id="wizard" class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h3 class="card-title mb-0">Configuración Inicial</h3>
-        </div>
-        <div class="card-body">
-          <form id="form-caracterizacion">
-            
-            <!-- Ingreso Principal -->
-            <div class="mb-4">
-              <label for="ingreso-principal" class="form-label fw-bold">Ingreso Principal</label>
-              <input type="number" step="0.01" class="form-control" id="ingreso-principal" placeholder="Ej. 2500000" required>
-            </div>
+  <section id="wizard" class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">Configuración Inicial</h3>
+          </div>
+          <div class="card-body">
+            <form id="form-caracterizacion">
 
-            <hr class="my-4">
-
-            <!-- Ingresos Adicionales Dinámicos -->
-            <div class="mb-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0">Ingresos Adicionales</h5>
-                <button type="button" class="btn btn-outline-success btn-sm" id="btn-add-ingreso">
-                  + Agregar Ingreso
-                </button>
+              <!-- Ingreso Principal -->
+              <div class="mb-4">
+                <label for="ingreso-principal" class="form-label fw-bold">Ingreso Principal</label>
+                <input type="number" step="0.01" class="form-control" id="ingreso-principal"
+                  placeholder="Ej. 2500000" required>
               </div>
-              <div id="contenedor-ingresos-adicionales" class="d-flex flex-column gap-2">
-                <!-- Filas dinámicas de ingresos adicionales -->
+
+              <hr class="my-4">
+
+              <!-- Ingresos Adicionales Dinámicos -->
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="mb-0">Ingresos Adicionales</h5>
+                  <button type="button" class="btn btn-outline-success btn-sm" id="btn-add-ingreso">
+                    + Agregar Ingreso
+                  </button>
+                </div>
+                <div id="contenedor-ingresos-adicionales" class="d-flex flex-column gap-2">
+                  <!-- Filas dinámicas de ingresos adicionales -->
+                </div>
               </div>
-            </div>
 
-            <hr class="my-4">
+              <hr class="my-4">
 
-            <!-- Gastos Fijos Dinámicos -->
-            <div class="mb-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0">Gastos Fijos</h5>
-                <button type="button" class="btn btn-outline-danger btn-sm" id="btn-add-gasto">
-                  + Agregar Gasto Fijo
-                </button>
+              <!-- Gastos Fijos Dinámicos -->
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="mb-0">Gastos Fijos</h5>
+                  <button type="button" class="btn btn-outline-danger btn-sm" id="btn-add-gasto">
+                    + Agregar Gasto Fijo
+                  </button>
+                </div>
+                <div id="contenedor-gastos-fijos" class="d-flex flex-column gap-3">
+                  <!-- Filas dinámicas de gastos fijos -->
+                </div>
               </div>
-              <div id="contenedor-gastos-fijos" class="d-flex flex-column gap-3">
-                <!-- Filas dinámicas de gastos fijos -->
+
+              <!-- Botón Final -->
+              <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Guardar Configuración</button>
               </div>
-            </div>
 
-            <!-- Botón Final -->
-            <div class="d-grid gap-2 mt-4">
-              <button type="submit" class="btn btn-primary btn-lg">Guardar Configuración</button>
-            </div>
-
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- 2. SECCIÓN: DASHBOARD (Oculto por defecto con d-none) -->
   <section id="dashboard" class="d-none">
-    
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container-fluid">
@@ -79,12 +83,14 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto align-items-center">
             <li class="nav-item">
               <a class="nav-link active" href="#">Inicio</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Ajustes</a>
+            <li class="nav-item ms-lg-2">
+              <button type="button" class="btn btn-outline-danger btn-sm" id="btn-reiniciar">
+                Reiniciar Datos
+              </button>
             </li>
           </ul>
         </div>
@@ -92,14 +98,14 @@
     </nav>
 
     <div class="container">
-      
-      <!-- 4 Cards de Resumen (Grid de Bootstrap) -->
+
+      <!-- 4 Cards de Resumen -->
       <div class="row g-3 mb-4">
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card text-white bg-primary">
             <div class="card-body">
-              <h5 class="card-title">Presupuesto</h5>
-              <p class="card-text fs-4 fw-bold">$0.00</p>
+              <h5 class="card-title">Ingresos Totales</h5>
+              <p class="card-text fs-4 fw-bold" id="card-ingresos-totales">$0</p>
             </div>
           </div>
         </div>
@@ -107,8 +113,8 @@
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card text-white bg-danger">
             <div class="card-body">
-              <h5 class="card-title">Gastos Totales</h5>
-              <p class="card-text fs-4 fw-bold">$0.00</p>
+              <h5 class="card-title">Gastos Fijos</h5>
+              <p class="card-text fs-4 fw-bold" id="card-gastos-fijos">$0</p>
             </div>
           </div>
         </div>
@@ -116,8 +122,8 @@
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card text-white bg-success">
             <div class="card-body">
-              <h5 class="card-title">Saldo Disponible</h5>
-              <p class="card-text fs-4 fw-bold">$0.00</p>
+              <h5 class="card-title">Capacidad / Saldo Inicial</h5>
+              <p class="card-text fs-4 fw-bold" id="card-saldo-inicial">$0</p>
             </div>
           </div>
         </div>
@@ -125,54 +131,154 @@
         <div class="col-12 col-sm-6 col-lg-3">
           <div class="card text-white bg-info">
             <div class="card-body">
-              <h5 class="card-title">Categorías</h5>
-              <p class="card-text fs-4 fw-bold">0</p>
+              <h5 class="card-title">Gastos Variables</h5>
+              <p class="card-text fs-4 fw-bold" id="card-gastos-variables">$0</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Módulo de Gastos Diarios -->
-      <div class="row">
-        <div class="col-12">
-          <div class="card shadow-sm mb-4">
-            <div class="card-header bg-white">
-              <h4 class="card-title mb-0">Gastos Diarios</h4>
-            </div>
-            <div class="card-body">
-              <form id="form-gastos" class="row g-3 mb-4">
-                <div class="col-md-5">
-                  <input type="text" class="form-control" placeholder="Concepto del gasto" required>
-                </div>
-                <div class="col-md-4">
-                  <input type="number" class="form-control" placeholder="Monto" required>
-                </div>
-                <div class="col-md-3">
-                  <button type="submit" class="btn btn-danger w-100">Agregar Gasto</button>
-                </div>
-              </form>
+      <!-- Módulo de Pestañas: Gastos Diarios, Ingresos Extra y Gastos Fijos -->
+<div class="row">
+  <div class="col-12">
+    <div class="card shadow-sm mb-4">
 
-              <!-- Tabla / Lista de gastos -->
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Fecha</th>
-                      <th>Concepto</th>
-                      <th>Monto</th>
-                    </tr>
-                  </thead>
-                  <tbody id="lista-gastos">
-                    <!-- Aquí el JS agregará las filas -->
-                  </tbody>
-                </table>
+      <!-- Encabezado con 3 Pestañas -->
+      <div class="card-header bg-white">
+        <ul class="nav nav-tabs card-header-tabs" id="tabModulos" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active text-danger fw-bold" id="gastos-tab" data-bs-toggle="tab" data-bs-target="#tab-gastos" type="button" role="tab">
+              Gastos Diarios
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-success fw-bold" id="ingresos-tab" data-bs-toggle="tab" data-bs-target="#tab-ingresos" type="button" role="tab">
+              Ingresos Adicionales / Extra
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link text-primary fw-bold" id="fijos-tab" data-bs-toggle="tab" data-bs-target="#tab-fijos" type="button" role="tab">
+              Gastos Fijos
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-body">
+        <div class="tab-content" id="contenidoModulos">
+
+          <!-- Pestaña 1: Gastos Diarios -->
+          <div class="tab-pane fade show active" id="tab-gastos" role="tabpanel">
+            <form id="form-gastos" class="row g-3 mb-4">
+              <div class="col-md-4">
+                <input type="text" class="form-control" id="gasto-concepto" placeholder="Concepto (ej. Almuerzo)" required>
               </div>
+              <div class="col-md-3">
+                <input type="number" step="0.01" class="form-control" id="gasto-monto" placeholder="Monto" required>
+              </div>
+              <div class="col-md-3">
+                <select class="form-select" id="gasto-categoria" required>
+                  <option value="" disabled selected>Categoría...</option>
+                  <option value="Comida">Comida</option>
+                  <option value="Ocio">Ocio</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Varios">Varios</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-danger w-100">Agregar Gasto</button>
+              </div>
+            </form>
 
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Concepto</th>
+                    <th>Categoría</th>
+                    <th>Monto</th>
+                    <th class="text-end">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-gastos"></tbody>
+              </table>
             </div>
           </div>
+
+          <!-- Pestaña 2: Ingresos Adicionales / Extra -->
+          <div class="tab-pane fade" id="tab-ingresos" role="tabpanel">
+            <form id="form-ingresos-extra" class="row g-3 mb-4">
+              <div class="col-md-6">
+                <input type="text" class="form-control" id="ingreso-extra-concepto" placeholder="Concepto (ej. Venta, Bonificación)" required>
+              </div>
+              <div class="col-md-4">
+                <input type="number" step="0.01" class="form-control" id="ingreso-extra-monto" placeholder="Monto" required>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Agregar Ingreso</button>
+              </div>
+            </form>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th class="text-end">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-ingresos-extra"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Pestaña 3: Gastos Fijos -->
+          <div class="tab-pane fade" id="tab-fijos" role="tabpanel">
+            <form id="form-gastos-fijos-dashboard" class="row g-3 mb-4">
+              <div class="col-md-4">
+                <input type="text" class="form-control" id="gasto-fijo-concepto" placeholder="Nombre (ej. Internet, Arriendo)" required>
+              </div>
+              <div class="col-md-3">
+                <input type="number" step="0.01" class="form-control" id="gasto-fijo-monto" placeholder="Monto Total" required>
+              </div>
+              <div class="col-md-3">
+                <div class="input-group">
+                  <span class="input-group-text">N° Personas</span>
+                  <input type="number" class="form-control" id="gasto-fijo-personas" min="1" value="1">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Agregar Fijo</button>
+              </div>
+            </form>
+
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th>Concepto</th>
+                    <th>Monto Total</th>
+                    <th>Compartido</th>
+                    <th>Monto Aportado</th>
+                    <th class="text-end">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="lista-gastos-fijos"></tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
       </div>
 
+    </div>
+  </div>
+</div>
+
+     
     </div>
   </section>
 
@@ -181,7 +287,7 @@
 
   <!-- Tu archivo JS personalizado -->
   <script src="./js/javascript.js"></script>
-  
+
 </body>
-</body>
+
 </html>
